@@ -42,3 +42,6 @@ try:
 except SanitizeError:
     print("So bad, the field could not be sanitized.")
 ```
+
+If you want to parse `opening_hours` fields to know, for example, whether a facility is open, OH Sanitizer is NOT what you need.
+See the [Humanized Opening Hours](https://github.com/rezemika/humanized_opening_hours) module or its [alternatives](https://github.com/rezemika/humanized_opening_hours#alternatives).
