@@ -75,7 +75,7 @@ class SanitizerTransformer(_lark.Transformer):
         return '-'.join(args)
     
     def monthday_date_day_to_day(self, args):
-        year = args.pop(0) if len(args) == 3 else None
+        year = args.pop(0) if len(args) == 4 else None
         month = args[0].value.capitalize()
         monthday_from = int(args[1].value)
         monthday_to = int(args[2].value)
@@ -85,7 +85,7 @@ class SanitizerTransformer(_lark.Transformer):
             return "{} {}-{}".format(month, monthday_from, monthday_to)
     
     def monthday_date_monthday(self, args):
-        year = args.pop(0) if len(args) == 4 else None
+        year = args.pop(0) if len(args) == 3 else None
         month = args[0].value.capitalize()
         monthday = int(args[1].value)
         if year:
@@ -94,7 +94,7 @@ class SanitizerTransformer(_lark.Transformer):
             return "{} {}".format(month, monthday)
     
     def monthday_date_month(self, args):
-        year = args.pop(0) if len(args) == 4 else None
+        year = args.pop(0) if len(args) == 2 else None
         month = args[0].value.capitalize()
         if year:
             return "{} {}".format(year, month)
@@ -336,6 +336,7 @@ class TestSanitize(_unittest.TestCase):
         self.assertEqual(sanitize_field("Jan-Feb 10:00-20:00"), "Jan-Feb 10:00-20:00")
         self.assertEqual(sanitize_field("Jan 10:00-20:00"), "Jan 10:00-20:00")
         self.assertEqual(sanitize_field("Jan,Aug 10:00-20:00"), "Jan,Aug 10:00-20:00")
+        self.assertEqual(sanitize_field("Mo-Su 08:00-18:00; Apr 10-15 off; Jun 08:00-14:00; Aug off; Dec 25 off"), "Mo-Su 08:00-18:00; Apr 10-15 off; Jun 08:00-14:00; Aug off; Dec 25 off")
         
         # Raises a SanitizeError, cause "<year> <time>" confuses with "<time>" without colon.
         # self.assertEqual(sanitize_field("2010 10:00-20:00"), "2010 10:00-20:00")
