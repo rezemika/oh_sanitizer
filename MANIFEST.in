@@ -1,2 +1,2 @@
-include field.ebnf
+include oh_sanitizer/*.ebnf
 include *.md

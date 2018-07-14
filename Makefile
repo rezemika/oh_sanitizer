@@ -2,7 +2,7 @@ freeze:
 	pip3 freeze | grep -Ev "pkg-resources|twine" > requirements.txt
 
 tests:
-	python3 oh_sanitizer.py
+	python3 oh_sanitizer/main.py
 
 benchmark:
 	@echo "=== Time for a single field:"

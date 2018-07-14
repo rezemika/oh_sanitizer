@@ -1,23 +1,3 @@
-"""A corrector for the 'opening_hours' fields from OpenStreetMap.
-
-Provides a 'sanitize_field()' function, which tries to fix the most
-current errors in the given field (takes and returns a string).
-
-It can raise the following exceptions:
-
-- TypeError : If the given field is not a string.
-- SanitizeError : The generic exception of 'oh_sanitizer',
-    raised when the field can't be parsed (if it is too complex, or invalid).
-- InconsistentField : Inheriting from SanitizeError,
-    raised when the field contains an invalid pattern which can't
-    be corrected automatically.
-
-Example:
->>> import oh_sanitizer
->>> print(oh_sanitizer.sanitize_field("mo-fr 10h - 7:00 pm"))
-"Mo-Fr 10:00-19:00"
-"""
-
 import os as _os
 import re as _re
 
@@ -29,14 +9,8 @@ from lark.lexer import Token as _Token
 
 # TODO: Fix 'Mo,SH'
 
-__version__ = "0.1.0"
-__appname__ = "oh_sanitizer"
-__author__ = "rezemika <reze.mika@gmail.com>"
-__licence__ = "AGPLv3"
-__all__ = ["sanitize_field", "SanitizeError", "InconsistentField"]
 
-
-def _get_parser():
+def get_parser():
     """
         Returns a Lark parser able to parse a valid field.
     """
@@ -46,7 +20,7 @@ def _get_parser():
     return _lark.Lark(grammar, start="time_domain", parser="earley")
 
 
-_PARSER = _get_parser()
+PARSER = get_parser()
 
 
 class SanitizeError(Exception):
@@ -64,7 +38,7 @@ class InconsistentField(SanitizeError):
     pass
 
 
-class _SanitizerTransformer(_lark.Transformer):
+class SanitizerTransformer(_lark.Transformer):
     def time_domain(self, args):
         parts = []
         for arg in args:
@@ -319,8 +293,8 @@ def sanitize_field(field):
     if _re.match("[0-9]{4} [0-9].+", field):
         raise SanitizeError("This field can not be parsed properly.")
     try:
-        tree = _PARSER.parse(field.replace('"""', '"').replace('""', '"'))
-        new_field = _SanitizerTransformer().transform(tree)
+        tree = PARSER.parse(field.replace('"""', '"').replace('""', '"'))
+        new_field = SanitizerTransformer().transform(tree)
     except (
         _lark.lexer.UnexpectedInput,
         _lark.common.UnexpectedToken,
