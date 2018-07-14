@@ -288,7 +288,7 @@ def sanitize_field(field):
     """
     # The exceptions catching should be modified when the next version
     # 'lark-parser' will be released (it introduce a better exception handling).
-    if not isinstance(field, str):
+    if not isinstance(field, str) and not isinstance(field, unicode):
         raise TypeError("The field must be a string.")
     if _re.match("[0-9]{4} [0-9].+", field):
         raise SanitizeError("This field can not be parsed properly.")
