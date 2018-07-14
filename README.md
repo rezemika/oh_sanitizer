@@ -17,10 +17,12 @@ Here is what it can do.
 "2010-2020/2 Dec-Feb 10:00-12:00,13:00-19:00"
 ```
 
+**It works both with Python 2 and 3.**
+
 It is so small that you can include it directly into your projet.
 You can also install it with PyPi:
 
-    $ pip3 install oh-sanitizer
+    $ pip install oh-sanitizer
 
 The `sanitize_field()` function can raise the following exceptions:
 - `TypeError` : If the given field is not a string.

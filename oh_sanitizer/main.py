@@ -16,7 +16,7 @@ def get_parser():
     """
     base_dir = _os.path.dirname(_os.path.realpath(__file__))
     with open(_os.path.join(base_dir, "field.ebnf"), 'r') as f:
-        grammar = f.read()
+        grammar = f.read().decode("UTF-8")
     return _lark.Lark(grammar, start="time_domain", parser="earley")
 
 
