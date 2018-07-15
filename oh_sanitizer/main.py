@@ -112,8 +112,8 @@ class SanitizerTransformer(_lark.Transformer):
             return args[0] + " easter " + args[2]
     
     def day_offset(self, args):
-        offset_sign, days = args[0].value.strip("days ")
-        days = int(days)
+        offset_sign = args[0].value
+        days = int(args[1].value)
         if days == 1:
             return offset_sign + str(days) + " day"
         else:
