@@ -149,16 +149,16 @@ class SanitizerTransformer(_lark.Transformer):
         DAYS = {
             "Mo": ["mo", "monday", "lundi", "lunes"],
             "Tu": ["tu", "tuesday", "mardi", "martes"],
-            "We": ["we", "wednesday", "mercredi", "miercoles"],
+            "We": ["we", "wednesday", "mercredi", "miercoles", "miércoles"],
             "Th": ["th", "thursday", "jeudi", "jueves"],
             "Fr": ["fr", "friday", "vendredi", "viernes"],
-            "Sa": ["sa", "saturday", "samedi", "sabado"],
+            "Sa": ["sa", "saturday", "samedi", "sabado", "sábado"],
             "Su": ["su", "sunday", "dimanche", "domingo"]
         }
         for normalized_day, localized_days in DAYS.items():
             if day.lower() in localized_days:
                 return normalized_day
-        # Should not come he_re.
+        # Should not come here.
     
     # Year
     def year(self, args):
