@@ -18,7 +18,7 @@ Example:
 "Mo-Fr 10:00-19:00"
 """
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 __appname__ = "oh_sanitizer"
 __author__ = "rezemika <reze.mika@gmail.com>"
 __licence__ = "AGPLv3"
