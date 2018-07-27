@@ -292,8 +292,11 @@ def sanitize_field(field):
         raise TypeError("The field must be a string.")
     if _re.match("[0-9]{4} [0-9].+", field):
         raise SanitizeError("This field can not be parsed properly.")
+    if field.count('"') % 2 != 0:
+        raise InconsistentField("This field contains inconsistent quotes.")
     try:
-        tree = PARSER.parse(field.replace('"""', '"').replace('""', '"'))
+        field = field.replace('"""', '"').replace('""', '"')
+        tree = PARSER.parse(field)
         new_field = SanitizerTransformer().transform(tree)
     except (
         _lark.lexer.UnexpectedInput,
@@ -412,6 +415,12 @@ class TestSanitize(_unittest.TestCase):
         
         with self.assertRaises(InconsistentField) as context:
             sanitize_field("week 56 off")
+        
+        with self.assertRaises(InconsistentField) as context:
+            sanitize_field('"on appointement')
+        
+        with self.assertRaises(InconsistentField) as context:
+            sanitize_field('on appointement"')
 
 
 if __name__ == '__main__':
