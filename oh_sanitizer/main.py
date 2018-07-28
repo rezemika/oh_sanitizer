@@ -300,11 +300,7 @@ def sanitize_field(field):
         field = field.replace('"""', '"').replace('""', '"')
         tree = PARSER.parse(field)
         new_field = SanitizerTransformer().transform(tree)
-    except (
-        _lark.lexer.UnexpectedInput,
-        _lark.common.UnexpectedToken,
-        _lark.common.ParseError
-    ) as e:
+    except _lark.exceptions.LarkError as e:
         raise SanitizeError(
             "The field could not be parsed. It is probably invalid, "
             "or just too complex for the parser."

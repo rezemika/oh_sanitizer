@@ -102,7 +102,8 @@ monthday_range : monthday_date  // "Dec 25"
 monthday_date : [year " "] MONTH " " INT -> monthday_date_monthday
               | [year " "] MONTH " " INT "-" INT -> monthday_date_day_to_day
               | [year " "] MONTH -> monthday_date_month
-              | [year " "] EASTER [day_offset] -> monthday_date_easter
+              | [year " "] EASTER -> monthday_date_easter
+              | [year " "] EASTER day_offset -> monthday_date_easter
 
 //
 
