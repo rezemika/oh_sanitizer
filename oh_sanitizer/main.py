@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import os as _os
 import re as _re
 
@@ -149,10 +151,10 @@ class SanitizerTransformer(_lark.Transformer):
         DAYS = {
             "Mo": ["mo", "monday", "lundi", "lunes"],
             "Tu": ["tu", "tuesday", "mardi", "martes"],
-            "We": ["we", "wednesday", "mercredi", "miercoles", "miércoles"],
+            "We": ["we", "wednesday", "mercredi", "miercoles", u"miércoles"],
             "Th": ["th", "thursday", "jeudi", "jueves"],
             "Fr": ["fr", "friday", "vendredi", "viernes"],
-            "Sa": ["sa", "saturday", "samedi", "sabado", "sábado"],
+            "Sa": ["sa", "saturday", "samedi", "sabado", u"sábado"],
             "Su": ["su", "sunday", "dimanche", "domingo"]
         }
         for normalized_day, localized_days in DAYS.items():
