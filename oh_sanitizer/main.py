@@ -136,7 +136,8 @@ class SanitizerTransformer(_lark.Transformer):
         return ','.join(args)
     
     def holiday_in_weekday_sequence_selector(self, args):
-        holidays = args[1:]
+        holidays = [h.upper() for h in args if h.lower() in ('sh', 'ph')]
+        days = [d for d in args if d not in holidays]
         return ','.join(holidays) + ' ' + args[-1]
     
     # Weekdays
@@ -299,6 +300,8 @@ def sanitize_field(field):
     try:
         field = field.replace('"""', '"').replace('""', '"')
         tree = PARSER.parse(field)
+        print(tree)
+        print()
         new_field = SanitizerTransformer().transform(tree)
     except _lark.exceptions.LarkError as e:
         raise SanitizeError(
