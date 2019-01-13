@@ -300,8 +300,6 @@ def sanitize_field(field):
     try:
         field = field.replace('"""', '"').replace('""', '"')
         tree = PARSER.parse(field)
-        print(tree)
-        print()
         new_field = SanitizerTransformer().transform(tree)
     except _lark.exceptions.LarkError as e:
         raise SanitizeError(
